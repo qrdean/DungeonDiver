@@ -1,13 +1,44 @@
-[gd_scene load_steps=3 format=3 uid="uid://fh3uh8c1daqd"]
+[gd_scene load_steps=5 format=3 uid="uid://fh3uh8c1daqd"]
 
-[ext_resource type="Texture2D" uid="uid://coj0y76deapb6" path="res://assets/background.png" id="1_v4ucy"]
-[ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player.tscn" id="2_5lgut"]
+[ext_resource type="Texture2D" uid="uid://bokcsgajynuaf" path="res://assets/background.png" id="1_v4ucy"]
+[ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_8aclg"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="3_ophb3"]
+[ext_resource type="PackedScene" uid="uid://d4ncufhvpp51u" path="res://enemies/enemy.tscn" id="4_ikrpu"]
 
 [node name="World" type="Node2D"]
+metadata/_edit_lock_ = true
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(320, 180)
 texture = ExtResource("1_v4ucy")
+metadata/_edit_lock_ = true
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("2_5lgut")]
-position = Vector2(314, 164)
+[node name="Background2" type="Sprite2D" parent="."]
+position = Vector2(960, 180)
+texture = ExtResource("1_v4ucy")
+metadata/_edit_lock_ = true
+
+[node name="Background3" type="Sprite2D" parent="."]
+position = Vector2(320, 539)
+texture = ExtResource("1_v4ucy")
+metadata/_edit_lock_ = true
+
+[node name="Background4" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("1_v4ucy")
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("2_8aclg")]
+position = Vector2(258, 150)
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("node_to_follow")]
+position = Vector2(321, 180)
+limit_left = 0
+limit_top = 0
+limit_right = 1260
+limit_bottom = 710
+script = ExtResource("3_ophb3")
+node_to_follow = NodePath("../Player")
+
+[node name="enemy" parent="." instance=ExtResource("4_ikrpu")]
+position = Vector2(362, 150)

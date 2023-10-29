@@ -1,0 +1,98 @@
+[gd_scene load_steps=12 format=3 uid="uid://c4cms4p3rsxmy"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_6q8gi"]
+[ext_resource type="Texture2D" uid="uid://drwbl6pf3jnpr" path="res://assets/player_blockout-Sheet.png" id="2_i5te6"]
+[ext_resource type="Script" path="res://player/Sword.gd" id="3_wulmy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18usv"]
+atlas = ExtResource("2_i5te6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lf4m"]
+atlas = ExtResource("2_i5te6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0q0in"]
+atlas = ExtResource("2_i5te6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qef56"]
+atlas = ExtResource("2_i5te6")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_coix6"]
+atlas = ExtResource("2_i5te6")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nxgeh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18usv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5lf4m")
+}],
+"loop": true,
+"name": &"down-attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0q0in")
+}],
+"loop": true,
+"name": &"left-attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qef56")
+}],
+"loop": true,
+"name": &"right-attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_coix6")
+}],
+"loop": true,
+"name": &"up-attack",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w31ay"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8qenh"]
+size = Vector2(28, 28)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_6q8gi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nxgeh")
+animation = &"down-attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w31ay")
+
+[node name="Weapon" type="Node2D" parent="."]
+script = ExtResource("3_wulmy")
+
+[node name="Sprite2D" type="Sprite2D" parent="Weapon"]
+
+[node name="Area2D" type="Area2D" parent="Weapon"]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Area2D"]
+shape = SubResource("RectangleShape2D_8qenh")
+
+[node name="Timer" type="Timer" parent="Weapon"]
+wait_time = 0.5
