@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://fh3uh8c1daqd"]
+[gd_scene load_steps=10 format=3 uid="uid://fh3uh8c1daqd"]
 
 [ext_resource type="Texture2D" uid="uid://bokcsgajynuaf" path="res://assets/background.png" id="1_v4ucy"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_8aclg"]
 [ext_resource type="Script" path="res://resources/player_stats.gd" id="3_jw7b5"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="3_ophb3"]
 [ext_resource type="PackedScene" uid="uid://cbfmy36pfmwax" path="res://item.tscn" id="4_4hjtv"]
+[ext_resource type="Resource" uid="uid://cyakd36oa7m1o" path="res://resources/items/potion_resource.tres" id="6_uik7b"]
+[ext_resource type="Resource" uid="uid://dgg2hxxernm88" path="res://resources/items/weapon_resource.tres" id="7_2f817"]
+[ext_resource type="Resource" uid="uid://c0y26sldwc3m8" path="res://resources/items/armor_resource.tres" id="8_at4cg"]
 
 [sub_resource type="Resource" id="Resource_qdkmv"]
 script = ExtResource("3_jw7b5")
@@ -50,4 +53,13 @@ script = ExtResource("3_ophb3")
 node_to_follow = NodePath("../Player")
 
 [node name="Item" parent="." instance=ExtResource("4_4hjtv")]
-position = Vector2(386, 160)
+position = Vector2(427, 147)
+resource = ExtResource("8_at4cg")
+
+[node name="Item2" parent="." instance=ExtResource("4_4hjtv")]
+position = Vector2(258, 236)
+resource = ExtResource("7_2f817")
+
+[node name="Item3" parent="." instance=ExtResource("4_4hjtv")]
+position = Vector2(430, 239)
+resource = ExtResource("6_uik7b")

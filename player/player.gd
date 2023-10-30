@@ -59,26 +59,34 @@ func handle_sword():
 		if last_direction.y < 0:
 			weapon.position = Vector2(0, -30)
 
-func _handle_item_pickup(item_res: ItemResource):
-	if item_res.type == ItemResource.ItemType.WEAPON:
+func _handle_item_pickup(item: Item):
+	var spent = false
+	if item.resource.type == ItemResource.ItemType.WEAPON:
 		print_debug("Got Weapon")
-		player_stats.attack_damage += item_res.stats
+		player_stats.attack_damage += item.resource.stats
+		spent = true
 		print_debug(player_stats.attack_damage)
-	if item_res.type == ItemResource.ItemType.ARMOR:
+	if item.resource.type == ItemResource.ItemType.ARMOR:
 		print_debug("Got Armor")
-		player_stats.armor += item_res.stats
+		player_stats.armor += item.resource.stats
+		spent = true
 		print_debug(player_stats.armor)
-	if item_res.type == ItemResource.ItemType.POTION:
+	if item.resource.type == ItemResource.ItemType.POTION:
 		print_debug("Got Potion")
-		if item_res.potion_sub_type == ItemResource.PotionTypes.HEALTH:
+		if item.resource.potion_sub_type == ItemResource.PotionTypes.HEALTH:
 			print_debug("health potion")
-			health += item_res.stats
+			health += item.resource.stats
 			if health > player_stats.max_health:
 				health = player_stats.max_health
+				spent = true
 			print_debug(health)
-		if item_res.potion_sub_type == ItemResource.PotionTypes.MANA:
+		if item.resource.potion_sub_type == ItemResource.PotionTypes.MANA:
 			print_debug("mana potion")
-			mana += item_res.stats
+			mana += item.resource.stats
 			if mana > player_stats.max_mana:
 				mana = player_stats.max_mana
+				spent = true
 			print_debug(mana)
+	
+	if spent:
+		item.queue_free()
