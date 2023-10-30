@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4cms4p3rsxmy"]
+[gd_scene load_steps=14 format=3 uid="uid://c4cms4p3rsxmy"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_6q8gi"]
 [ext_resource type="Texture2D" uid="uid://drwbl6pf3jnpr" path="res://assets/player_blockout-Sheet.png" id="2_i5te6"]
 [ext_resource type="Script" path="res://player/Sword.gd" id="3_wulmy"]
+[ext_resource type="Script" path="res://player/PickupArea.gd" id="5_gh4wo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18usv"]
 atlas = ExtResource("2_i5te6")
@@ -73,7 +74,11 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8qenh"]
 size = Vector2(28, 28)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yehe4"]
+size = Vector2(34, 34)
+
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_6q8gi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -96,3 +101,11 @@ shape = SubResource("RectangleShape2D_8qenh")
 
 [node name="Timer" type="Timer" parent="Weapon"]
 wait_time = 0.5
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("5_gh4wo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("RectangleShape2D_yehe4")

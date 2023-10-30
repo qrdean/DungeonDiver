@@ -1,14 +1,23 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 const SPEED = 500.0
 
+@export var player_stats: PlayerStats
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var weapon: Node2D = $Weapon
+@onready var pickup_area: Area2D = $PickupArea
+
+var health: int
+var mana: int
 
 var last_direction: Vector2
 
 func _ready():
+	health = player_stats.max_health
+	mana = player_stats.max_mana
 	animated_sprite.play("default")
+	pickup_area.item_pickup.connect(_handle_item_pickup)
 
 func _physics_process(_delta):
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
@@ -49,3 +58,27 @@ func handle_sword():
 			weapon.position = Vector2(-30, 0)
 		if last_direction.y < 0:
 			weapon.position = Vector2(0, -30)
+
+func _handle_item_pickup(item_res: ItemResource):
+	if item_res.type == ItemResource.ItemType.WEAPON:
+		print_debug("Got Weapon")
+		player_stats.attack_damage += item_res.stats
+		print_debug(player_stats.attack_damage)
+	if item_res.type == ItemResource.ItemType.ARMOR:
+		print_debug("Got Armor")
+		player_stats.armor += item_res.stats
+		print_debug(player_stats.armor)
+	if item_res.type == ItemResource.ItemType.POTION:
+		print_debug("Got Potion")
+		if item_res.potion_sub_type == ItemResource.PotionTypes.HEALTH:
+			print_debug("health potion")
+			health += item_res.stats
+			if health > player_stats.max_health:
+				health = player_stats.max_health
+			print_debug(health)
+		if item_res.potion_sub_type == ItemResource.PotionTypes.MANA:
+			print_debug("mana potion")
+			mana += item_res.stats
+			if mana > player_stats.max_mana:
+				mana = player_stats.max_mana
+			print_debug(mana)

@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://fh3uh8c1daqd"]
+[gd_scene load_steps=7 format=3 uid="uid://fh3uh8c1daqd"]
 
 [ext_resource type="Texture2D" uid="uid://bokcsgajynuaf" path="res://assets/background.png" id="1_v4ucy"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_8aclg"]
+[ext_resource type="Script" path="res://resources/player_stats.gd" id="3_jw7b5"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="3_ophb3"]
-[ext_resource type="PackedScene" uid="uid://d4ncufhvpp51u" path="res://enemies/enemy.tscn" id="4_ikrpu"]
+[ext_resource type="PackedScene" uid="uid://cbfmy36pfmwax" path="res://item.tscn" id="4_4hjtv"]
+
+[sub_resource type="Resource" id="Resource_qdkmv"]
+script = ExtResource("3_jw7b5")
+attack_damage = 10
+armor = 5
+max_health = 10
+max_mana = 10
 
 [node name="World" type="Node2D"]
 metadata/_edit_lock_ = true
@@ -30,6 +38,7 @@ metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("2_8aclg")]
 position = Vector2(258, 150)
+player_stats = SubResource("Resource_qdkmv")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("node_to_follow")]
 position = Vector2(321, 180)
@@ -40,5 +49,5 @@ limit_bottom = 710
 script = ExtResource("3_ophb3")
 node_to_follow = NodePath("../Player")
 
-[node name="enemy" parent="." instance=ExtResource("4_ikrpu")]
-position = Vector2(362, 150)
+[node name="Item" parent="." instance=ExtResource("4_4hjtv")]
+position = Vector2(386, 160)

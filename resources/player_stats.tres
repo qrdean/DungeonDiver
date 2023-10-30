@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3 uid="uid://cfy543kygvyqr"]
+
+[ext_resource type="Script" path="res://resources/player_stats.gd" id="1_ei31g"]
+
+[resource]
+script = ExtResource("1_ei31g")
+attack_damage = 0
+armor = 0
