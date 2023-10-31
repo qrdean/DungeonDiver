@@ -9,7 +9,7 @@ var sword_facing_direction: Vector2 = Vector2(0.0, knockback_power)
 
 var active = false 
 
-func set_direction(dir: String):
+func set_direction(dir: String) -> void:
 	if dir == "down":
 		sword_facing_direction = Vector2(0.0, knockback_power)
 		animation_player.flip_h = false
@@ -29,23 +29,23 @@ func set_direction(dir: String):
 		animation_player.flip_v = true
 		animation_player.rotation_degrees = 90
 
-func swing():
+func swing() -> void:
 	if !active:
 		active = true
 		animation_player.visible = true
 		animation_player.play("attack")
 		hitbox.monitoring = true
 
-func _ready():
+func _ready() -> void:
 	hitbox.body_entered.connect(_on_body_entered)
 	animation_player.animation_finished.connect(_on_sword_timeout)
 
-func _on_sword_timeout():
+func _on_sword_timeout() -> void:
 	active = false
 	hitbox.monitoring = false
 	animation_player.visible = false
 
-func _on_body_entered(body):
+func _on_body_entered(body) -> void:
 	if body is Enemy:
 		body.take_damage(sword_facing_direction)
 

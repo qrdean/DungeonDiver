@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://fh3uh8c1daqd"]
+[gd_scene load_steps=10 format=3 uid="uid://fh3uh8c1daqd"]
 
 [ext_resource type="Texture2D" uid="uid://bokcsgajynuaf" path="res://assets/background.png" id="1_v4ucy"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_8aclg"]
@@ -16,10 +16,15 @@ max_mana = 10
 
 [sub_resource type="Resource" id="Resource_btdf3"]
 script = ExtResource("6_cdpel")
-health = 5
+health = 50
 move_speed = 100.0
 attack_speed = 15.0
 currency = 1
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_wumfv"]
+vertices = PackedVector2Array(22, 15, 1274, 18, 1274, 709, 15, 706)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(22, 15, 1274, 18, 1274, 709, 15, 706)])
 
 [node name="World" type="Node2D"]
 metadata/_edit_lock_ = true
@@ -57,6 +62,10 @@ limit_bottom = 710
 script = ExtResource("3_ophb3")
 node_to_follow = NodePath("../Player")
 
-[node name="enemy" parent="." instance=ExtResource("5_rvxgj")]
+[node name="enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
 position = Vector2(430, 153)
 enemy_stats = SubResource("Resource_btdf3")
+player = NodePath("../Player")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_wumfv")

@@ -17,3 +17,5 @@ texture = ExtResource("1_jreax")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_bum0b")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

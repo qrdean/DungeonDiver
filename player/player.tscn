@@ -41,7 +41,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_5lf4m")
 }],
 "loop": true,
-"name": &"down-attack",
+"name": &"down-move",
 "speed": 5.0
 }, {
 "frames": [{
@@ -49,7 +49,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_0q0in")
 }],
 "loop": true,
-"name": &"left-attack",
+"name": &"left-move",
 "speed": 5.0
 }, {
 "frames": [{
@@ -57,7 +57,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_qef56")
 }],
 "loop": true,
-"name": &"right-attack",
+"name": &"right-move",
 "speed": 5.0
 }, {
 "frames": [{
@@ -65,7 +65,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_coix6")
 }],
 "loop": true,
-"name": &"up-attack",
+"name": &"up-move",
 "speed": 5.0
 }]
 
@@ -127,7 +127,7 @@ script = ExtResource("1_6q8gi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nxgeh")
-animation = &"down-attack"
+animation = &"up-move"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_w31ay")
@@ -144,6 +144,7 @@ frame_progress = 1.0
 
 [node name="Area2D" type="Area2D" parent="Weapon"]
 collision_mask = 4
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Area2D"]
 shape = SubResource("RectangleShape2D_8qenh")
