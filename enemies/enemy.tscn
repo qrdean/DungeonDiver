@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4ncufhvpp51u"]
+[gd_scene load_steps=5 format=3 uid="uid://d4ncufhvpp51u"]
 
 [ext_resource type="Texture2D" uid="uid://bg5ghfjudn2ss" path="res://assets/enemy_blockout.png" id="1_jreax"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_nebln"]
+[ext_resource type="PackedScene" uid="uid://cbfmy36pfmwax" path="res://item.tscn" id="2_e2efq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bum0b"]
 size = Vector2(28, 28)
@@ -9,6 +10,7 @@ size = Vector2(28, 28)
 [node name="enemy" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_nebln")
+coin = ExtResource("2_e2efq")
 
 [node name="EnemyBlockout" type="Sprite2D" parent="."]
 texture = ExtResource("1_jreax")

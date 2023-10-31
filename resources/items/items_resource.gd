@@ -3,7 +3,8 @@ class_name ItemResource extends Resource
 enum ItemType {
 	WEAPON,
 	ARMOR,
-	POTION
+	POTION,
+	COIN
 }
 
 enum PotionTypes {
