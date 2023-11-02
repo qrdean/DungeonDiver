@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://fh3uh8c1daqd"]
+[gd_scene load_steps=13 format=3 uid="uid://fh3uh8c1daqd"]
 
 [ext_resource type="Texture2D" uid="uid://bokcsgajynuaf" path="res://assets/background.png" id="1_v4ucy"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_8aclg"]
@@ -25,6 +25,27 @@ currency = 1
 vertices = PackedVector2Array(22, 15, 1274, 18, 1274, 709, 15, 706)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(22, 15, 1274, 18, 1274, 709, 15, 706)])
+
+[sub_resource type="Resource" id="Resource_rs6yx"]
+script = ExtResource("6_cdpel")
+health = 5
+move_speed = 50.0
+attack_speed = 5.0
+currency = 5
+
+[sub_resource type="Resource" id="Resource_67d5p"]
+script = ExtResource("6_cdpel")
+health = 5
+move_speed = 75.0
+attack_speed = 5.0
+currency = 5
+
+[sub_resource type="Resource" id="Resource_3qghq"]
+script = ExtResource("6_cdpel")
+health = 10
+move_speed = 100.0
+attack_speed = 5.0
+currency = 5
 
 [node name="World" type="Node2D"]
 metadata/_edit_lock_ = true
@@ -69,3 +90,18 @@ player = NodePath("../Player")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_wumfv")
+
+[node name="enemy2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
+position = Vector2(157, 137)
+enemy_stats = SubResource("Resource_rs6yx")
+player = NodePath("../Player")
+
+[node name="enemy3" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
+position = Vector2(160, 279)
+enemy_stats = SubResource("Resource_67d5p")
+player = NodePath("../Player")
+
+[node name="enemy4" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
+position = Vector2(435, 279)
+enemy_stats = SubResource("Resource_3qghq")
+player = NodePath("../Player")

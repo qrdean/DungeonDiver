@@ -6,33 +6,54 @@ class_name Enemy extends CharacterBody2D
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
+@onready var hitbox_area: Area2D = $hitbox
+@onready var player_checker_area: Area2D = $player_checker
+@onready var attack_timer: Timer = $attack_timer
+
 var health: int
 var move_speed: float
 var attack_speed: float
 var knocked_back: bool = false
 
+var player_target: Player
+var attacking: bool = false
+var windup: bool = false
+
+var randomnum: float
+
 func _ready() -> void:
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	randomnum = rng.randf()
 	navigation_agent.target_position = player.global_position
 	if enemy_stats:
 		health = enemy_stats.health
 		move_speed = enemy_stats.move_speed
 		attack_speed = enemy_stats.attack_speed
+	player_checker_area.attack_player.connect(_attack)	
+	attack_timer.timeout.connect(_stop_attack)
 
 func _physics_process(_delta) -> void:
-	navigation_agent.target_position = player.global_position
-
-	if knocked_back: 
-		velocity = lerp(velocity, Vector2.ZERO, 0.1)
-		if (velocity.x < 0.01 and velocity.x > - 0.01) and (velocity.y < 0.01 and velocity.y > -0.01):
-			knocked_back = false
+	if attacking:
+		move(player.global_position, _delta)
 	else:
-		if navigation_agent and not navigation_agent.is_navigation_finished():
-			var current_agent_position = global_position
-			var next_path_position = navigation_agent.get_next_path_position()
+		move(get_circle_position(randomnum), _delta)
 
-			velocity = (next_path_position - current_agent_position).normalized() * enemy_stats.move_speed
-		
+func move(target, delta):
+	var direction = (target - global_position).normalized()
+	var desired_velocity = direction * enemy_stats.move_speed
+	var steering = (desired_velocity - velocity) * delta * 2.5
+	velocity += steering
 	move_and_slide()
+
+func get_circle_position(random) -> Vector2:
+	var kill_circle = player.global_position
+	var radius = 100
+	var angle = random * PI * 2
+	var x = kill_circle.x + cos(angle) * radius
+	var y = kill_circle.y + sin(angle) * radius
+
+	return Vector2(x, y)
 
 func take_damage(knockback_dir: Vector2) -> void:
 	knocked_back = true
@@ -47,3 +68,10 @@ func _spawn_item() -> void:
 	coin_instance.resource = ItemResource.new(ItemResource.ItemType.COIN, enemy_stats.currency, ItemResource.PotionTypes.NONE)
 	coin_instance.global_position = self.global_position
 	add_sibling.call_deferred(coin_instance)
+
+func _attack():
+	attacking = true
+	attack_timer.start()
+
+func _stop_attack():
+	attacking = false

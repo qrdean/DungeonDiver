@@ -1,21 +1,84 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4ncufhvpp51u"]
+[gd_scene load_steps=12 format=3 uid="uid://d4ncufhvpp51u"]
 
 [ext_resource type="Texture2D" uid="uid://bg5ghfjudn2ss" path="res://assets/enemy_blockout.png" id="1_jreax"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_nebln"]
 [ext_resource type="PackedScene" uid="uid://cbfmy36pfmwax" path="res://item.tscn" id="2_e2efq"]
+[ext_resource type="Script" path="res://enemies/enemy_hitbox.gd" id="4_y5e4h"]
+[ext_resource type="Script" path="res://enemies/player_checker.gd" id="5_qdjiq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukwgc"]
+atlas = ExtResource("1_jreax")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_excuo"]
+atlas = ExtResource("1_jreax")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s0ld3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ukwgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_excuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_excuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_excuo")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bum0b"]
 size = Vector2(28, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8udx"]
+size = Vector2(28, 28)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sp0kf"]
+radius = 49.0102
 
 [node name="enemy" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_nebln")
 coin = ExtResource("2_e2efq")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_s0ld3")
+animation = &"attack"
+
 [node name="EnemyBlockout" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("1_jreax")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_bum0b")
 
+[node name="hitbox" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("4_y5e4h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("RectangleShape2D_q8udx")
+
+[node name="player_checker" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("5_qdjiq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_checker"]
+shape = SubResource("CircleShape2D_sp0kf")
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="attack_timer" type="Timer" parent="."]
+one_shot = true
