@@ -78,7 +78,12 @@ script = ExtResource("5_qdjiq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_checker"]
 shape = SubResource("CircleShape2D_sp0kf")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-
 [node name="attack_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="position_change_timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="attack_interval_timer" type="Timer" parent="."]
+autostart = true

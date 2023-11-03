@@ -4,11 +4,12 @@ class_name Enemy extends CharacterBody2D
 @export var coin: PackedScene
 @export var player: Player
 
-@onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
-
 @onready var hitbox_area: Area2D = $hitbox
 @onready var player_checker_area: Area2D = $player_checker
+
 @onready var attack_timer: Timer = $attack_timer
+@onready var attack_interval_timer: Timer = $attack_interval_timer
+@onready var position_change_timer: Timer = $position_change_timer
 
 var health: int
 var move_speed: float
@@ -20,28 +21,33 @@ var attacking: bool = false
 var windup: bool = false
 
 var randomnum: float
+var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
-	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	randomnum = rng.randf()
-	navigation_agent.target_position = player.global_position
 	if enemy_stats:
 		health = enemy_stats.health
 		move_speed = enemy_stats.move_speed
 		attack_speed = enemy_stats.attack_speed
+
+	# attack_interval_timer.wait_time = attack_speed
+	position_change_timer.wait_time = attack_speed
+
 	player_checker_area.attack_player.connect(_attack)	
 	attack_timer.timeout.connect(_stop_attack)
+	# attack_interval_timer.timeout.connect(_attack)
+	position_change_timer.timeout.connect(_position_change)
 
 func _physics_process(_delta) -> void:
 	if attacking:
-		move(player.global_position, _delta)
+		move(player.global_position, _delta, 2.0)
 	else:
 		move(get_circle_position(randomnum), _delta)
 
-func move(target, delta):
+func move(target, delta, modifier = 1.0):
 	var direction = (target - global_position).normalized()
-	var desired_velocity = direction * enemy_stats.move_speed
+	var desired_velocity = direction * enemy_stats.move_speed * modifier
 	var steering = (desired_velocity - velocity) * delta * 2.5
 	velocity += steering
 	move_and_slide()
@@ -73,5 +79,10 @@ func _attack():
 	attacking = true
 	attack_timer.start()
 
+
 func _stop_attack():
 	attacking = false
+
+
+func _position_change():
+	randomnum = rng.randf()
