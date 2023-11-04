@@ -99,21 +99,25 @@ script = ExtResource("3_ophb3")
 node_to_follow = NodePath("../Player")
 
 [node name="enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
+visible = false
 position = Vector2(430, 153)
 enemy_stats = SubResource("Resource_btdf3")
 player = NodePath("../Player")
 
 [node name="enemy2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
+visible = false
 position = Vector2(157, 137)
 enemy_stats = SubResource("Resource_rs6yx")
 player = NodePath("../Player")
 
 [node name="enemy3" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
+visible = false
 position = Vector2(160, 279)
 enemy_stats = SubResource("Resource_67d5p")
 player = NodePath("../Player")
 
 [node name="enemy4" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
+visible = false
 position = Vector2(435, 279)
 enemy_stats = SubResource("Resource_3qghq")
 player = NodePath("../Player")

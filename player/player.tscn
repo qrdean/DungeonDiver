@@ -1,10 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://c4cms4p3rsxmy"]
+[gd_scene load_steps=23 format=3 uid="uid://c4cms4p3rsxmy"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_6q8gi"]
 [ext_resource type="Texture2D" uid="uid://drwbl6pf3jnpr" path="res://assets/player_blockout-Sheet.png" id="2_i5te6"]
 [ext_resource type="Script" path="res://player/Sword.gd" id="3_wulmy"]
 [ext_resource type="Texture2D" uid="uid://dr2n42j7ne7g4" path="res://assets/melee_blockout-Sheet.png" id="4_pi0vi"]
+[ext_resource type="Script" path="res://player/Gun.gd" id="5_aiafq"]
 [ext_resource type="Script" path="res://player/PickupArea.gd" id="5_gh4wo"]
+[ext_resource type="Texture2D" uid="uid://deimolf0r0dk8" path="res://assets/item_blockout.png" id="6_5gxv2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18usv"]
 atlas = ExtResource("2_i5te6")
@@ -133,6 +135,7 @@ animation = &"up-move"
 shape = SubResource("RectangleShape2D_w31ay")
 
 [node name="Weapon" type="Node2D" parent="."]
+visible = false
 script = ExtResource("3_wulmy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Weapon"]
@@ -148,6 +151,13 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Area2D"]
 shape = SubResource("RectangleShape2D_8qenh")
+
+[node name="Gun" type="Node2D" parent="."]
+position = Vector2(2.08165e-12, 25)
+script = ExtResource("5_aiafq")
+
+[node name="Sprite2D" type="Sprite2D" parent="Gun"]
+texture = ExtResource("6_5gxv2")
 
 [node name="PickupArea" type="Area2D" parent="."]
 collision_layer = 2
