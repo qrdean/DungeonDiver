@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c4cms4p3rsxmy"]
+[gd_scene load_steps=24 format=3 uid="uid://c4cms4p3rsxmy"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_6q8gi"]
 [ext_resource type="Texture2D" uid="uid://drwbl6pf3jnpr" path="res://assets/player_blockout-Sheet.png" id="2_i5te6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://player/Gun.gd" id="5_aiafq"]
 [ext_resource type="Script" path="res://player/PickupArea.gd" id="5_gh4wo"]
 [ext_resource type="Texture2D" uid="uid://deimolf0r0dk8" path="res://assets/item_blockout.png" id="6_5gxv2"]
+[ext_resource type="PackedScene" uid="uid://bmh5b2ubnpvu" path="res://player/gun_bullet.tscn" id="6_uvk34"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18usv"]
 atlas = ExtResource("2_i5te6")
@@ -155,6 +156,7 @@ shape = SubResource("RectangleShape2D_8qenh")
 [node name="Gun" type="Node2D" parent="."]
 position = Vector2(2.08165e-12, 25)
 script = ExtResource("5_aiafq")
+bullet_scene = ExtResource("6_uvk34")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gun"]
 texture = ExtResource("6_5gxv2")

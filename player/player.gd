@@ -6,7 +6,9 @@ const SPEED = 500.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var weapon: Node2D = $Weapon
+@onready var gun: Node2D = $Gun
 @onready var pickup_area: Area2D = $PickupArea
+
 
 var weapon_inventory: Array[ItemResource] = []
 var armor_inventory: Array[ItemResource] = []
@@ -41,7 +43,8 @@ func _physics_process(_delta) -> void:
 		velocity = Vector2.ZERO
 
 	handle_walk_anim(direction)
-	handle_sword()
+	# handle_sword()
+	shoot_gun()
 	move_and_slide()
 
 func handle_walk_anim(direction: Vector2) -> void:
@@ -56,6 +59,10 @@ func handle_walk_anim(direction: Vector2) -> void:
 
 	if direction.x == 0 and direction.y == 0:
 		animated_sprite.play("default")
+
+func shoot_gun() -> void:
+	if Input.is_action_just_pressed("attack"):
+		gun.shoot()
 
 func handle_sword() -> void:
 	if Input.is_action_just_pressed("attack"):

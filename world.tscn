@@ -54,6 +54,7 @@ script = ExtResource("6_cdpel")
 health = 10
 move_speed = 100.0
 attack_speed = 5.0
+radial_distance = 100
 currency = 1
 
 [sub_resource type="Resource" id="Resource_rs6yx"]
@@ -61,6 +62,7 @@ script = ExtResource("6_cdpel")
 health = 5
 move_speed = 50.0
 attack_speed = 1.0
+radial_distance = 200
 currency = 5
 
 [sub_resource type="Resource" id="Resource_67d5p"]
@@ -68,6 +70,7 @@ script = ExtResource("6_cdpel")
 health = 5
 move_speed = 75.0
 attack_speed = 2.0
+radial_distance = 150
 currency = 5
 
 [sub_resource type="Resource" id="Resource_3qghq"]
@@ -75,6 +78,7 @@ script = ExtResource("6_cdpel")
 health = 10
 move_speed = 100.0
 attack_speed = 5.0
+radial_distance = 100
 currency = 5
 
 [node name="World" type="Node2D"]
@@ -99,25 +103,21 @@ script = ExtResource("3_ophb3")
 node_to_follow = NodePath("../Player")
 
 [node name="enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
-visible = false
 position = Vector2(430, 153)
 enemy_stats = SubResource("Resource_btdf3")
 player = NodePath("../Player")
 
 [node name="enemy2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
-visible = false
 position = Vector2(157, 137)
 enemy_stats = SubResource("Resource_rs6yx")
 player = NodePath("../Player")
 
 [node name="enemy3" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
-visible = false
 position = Vector2(160, 279)
 enemy_stats = SubResource("Resource_67d5p")
 player = NodePath("../Player")
 
 [node name="enemy4" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
-visible = false
 position = Vector2(435, 279)
 enemy_stats = SubResource("Resource_3qghq")
 player = NodePath("../Player")

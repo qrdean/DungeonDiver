@@ -54,7 +54,7 @@ func move(target, delta, modifier = 1.0):
 
 func get_circle_position(random) -> Vector2:
 	var kill_circle = player.global_position
-	var radius = 100 # Could be an enemy stat here for long range and short range units
+	var radius = enemy_stats.radial_distance 
 	var angle = random * PI * 2
 	var x = kill_circle.x + cos(angle) * radius
 	var y = kill_circle.y + sin(angle) * radius
