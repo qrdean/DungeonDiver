@@ -1,11 +1,10 @@
-extends Area2D
+class_name GunBullet extends Area2D
 
 @onready var visible_on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
+const SPEED = 400
+const KNOCKBACK_POWER = 100.0
 var direction = Vector2.RIGHT
-var SPEED = 400
-
-var knockback_power = 100.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,7 +17,7 @@ func _process(delta):
 
 func _hit_register(body: Node2D):
 	if body is Enemy:
-		var knockback_direction := Vector2(direction.x * knockback_power, direction.y * knockback_power)
+		var knockback_direction := Vector2(direction.x * KNOCKBACK_POWER, direction.y * KNOCKBACK_POWER)
 		body.take_damage(knockback_direction)
 		self.queue_free()
 

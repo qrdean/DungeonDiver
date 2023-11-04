@@ -6,20 +6,13 @@ class_name Enemy extends CharacterBody2D
 
 @onready var hitbox_area: Area2D = $hitbox
 @onready var player_checker_area: Area2D = $player_checker
-
 @onready var attack_timer: Timer = $attack_timer
-@onready var attack_interval_timer: Timer = $attack_interval_timer
 @onready var position_change_timer: Timer = $position_change_timer
 
 var health: int
-var move_speed: float
-var attack_speed: float
 var knocked_back: bool = false
-
-var player_target: Player
 var attacking: bool = false
 var windup: bool = false
-
 var randomnum: float
 var rng = RandomNumberGenerator.new()
 
@@ -28,15 +21,10 @@ func _ready() -> void:
 	randomnum = rng.randf()
 	if enemy_stats:
 		health = enemy_stats.health
-		move_speed = enemy_stats.move_speed
-		attack_speed = enemy_stats.attack_speed
 
-	# attack_interval_timer.wait_time = attack_speed
-	position_change_timer.wait_time = attack_speed
-
+	position_change_timer.wait_time = enemy_stats.attack_speed
 	player_checker_area.attack_player.connect(_attack)	
 	attack_timer.timeout.connect(_stop_attack)
-	# attack_interval_timer.timeout.connect(_attack)
 	position_change_timer.timeout.connect(_position_change)
 
 func _physics_process(_delta) -> void:
@@ -79,10 +67,8 @@ func _attack():
 	attacking = true
 	attack_timer.start()
 
-
 func _stop_attack():
 	attacking = false
-
 
 func _position_change():
 	randomnum = rng.randf()
