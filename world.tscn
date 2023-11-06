@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://fh3uh8c1daqd"]
+[gd_scene load_steps=18 format=3 uid="uid://fh3uh8c1daqd"]
 
 [ext_resource type="Texture2D" uid="uid://exlqy1lgm5tq" path="res://assets/tilemap.png" id="1_3jf5i"]
 [ext_resource type="Script" path="res://world.gd" id="1_ydt2j"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dp0q8v0vbeh8y" path="res://items/chest.tscn" id="10_j5tqo"]
 [ext_resource type="Resource" uid="uid://c0y26sldwc3m8" path="res://resources/items/armor_resource.tres" id="10_seajk"]
 [ext_resource type="Script" path="res://resources/items/items_resource.gd" id="11_1p7fu"]
+[ext_resource type="PackedScene" uid="uid://kxjc0d5ol2dw" path="res://shop.tscn" id="13_iivtp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gpgk1"]
 texture = ExtResource("1_3jf5i")
@@ -169,3 +170,6 @@ resource = ExtResource("10_seajk")
 position = Vector2(260, 254)
 item_scene = ExtResource("7_225vb")
 item_resource = SubResource("Resource_dqwbu")
+
+[node name="Shop" parent="." instance=ExtResource("13_iivtp")]
+position = Vector2(436, 152)

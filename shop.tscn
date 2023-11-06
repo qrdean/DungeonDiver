@@ -1,8 +1,51 @@
-[gd_scene load_steps=2 format=3 uid="uid://kxjc0d5ol2dw"]
+[gd_scene load_steps=14 format=3 uid="uid://kxjc0d5ol2dw"]
 
 [ext_resource type="Script" path="res://shop.gd" id="1_depwp"]
+[ext_resource type="Script" path="res://resources/items/items_resource.gd" id="2_rrlq6"]
+[ext_resource type="Texture2D" uid="uid://deimolf0r0dk8" path="res://assets/item_blockout.png" id="3_o5q0i"]
+[ext_resource type="Script" path="res://resources/items/shop_item_resource.gd" id="4_vd36u"]
+[ext_resource type="Texture2D" uid="uid://c76bkinysw032" path="res://assets/chest_blockout.png" id="5_112rb"]
+[ext_resource type="Texture2D" uid="uid://bg5ghfjudn2ss" path="res://assets/enemy_blockout.png" id="6_278hj"]
+[ext_resource type="PackedScene" uid="uid://ceeoblmmrv4ah" path="res://shop_item.tscn" id="7_ngr1t"]
+
+[sub_resource type="Resource" id="Resource_mwwwn"]
+script = ExtResource("2_rrlq6")
+type = 2
+stats = 5
+texture = ExtResource("3_o5q0i")
+
+[sub_resource type="Resource" id="Resource_g78j7"]
+script = ExtResource("4_vd36u")
+cost = 25
+item = SubResource("Resource_mwwwn")
+
+[sub_resource type="Resource" id="Resource_nyysa"]
+script = ExtResource("2_rrlq6")
+type = 1
+stats = 5
+texture = ExtResource("5_112rb")
+
+[sub_resource type="Resource" id="Resource_es6p8"]
+script = ExtResource("4_vd36u")
+cost = 15
+item = SubResource("Resource_nyysa")
+
+[sub_resource type="Resource" id="Resource_r5re4"]
+script = ExtResource("2_rrlq6")
+type = 2
+stats = 10
+texture = ExtResource("6_278hj")
+
+[sub_resource type="Resource" id="Resource_joxve"]
+script = ExtResource("4_vd36u")
+cost = 30
+item = SubResource("Resource_r5re4")
 
 [node name="Shop" type="Node2D"]
 script = ExtResource("1_depwp")
+shop_items_resource = Array[ExtResource("4_vd36u")]([SubResource("Resource_g78j7"), SubResource("Resource_es6p8"), SubResource("Resource_joxve")])
+shop_item_scene = ExtResource("7_ngr1t")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="shop_sprite" type="Sprite2D" parent="."]
+
+[node name="ShopItems" type="Node2D" parent="."]
