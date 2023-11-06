@@ -16,11 +16,13 @@ func _ready():
 
 func _on_body_entered(body: Node2D):
 	if body is Player:
-		body.attempt_interact.connect(_open_chest)
+		if !opened:
+			body.attempt_interact.connect(_open_chest)
 
 func _on_body_exit(body: Node2D):
 	if body is Player:
-		body.attempt_interact.disconnect(_open_chest)
+		if body.attempt_interact.is_connected(_open_chest):
+			body.attempt_interact.disconnect(_open_chest)
 
 func _open_chest():
 	if !opened:
