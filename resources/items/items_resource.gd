@@ -7,18 +7,12 @@ enum ItemType {
 	COIN
 }
 
-enum PotionTypes {
-	NONE,
-	HEALTH,
-	MANA,
-}
-
 @export var type: ItemType
 @export var stats: int
-@export var potion_sub_type: PotionTypes
+@export var texture: Texture2D
 
-func _init(p_type = ItemType.WEAPON, p_stats = 0, p_potion_sub_types = PotionTypes.NONE):
+func _init(p_type = ItemType.WEAPON, p_stats = 0, p_texture = null):
 	type = p_type
 	stats = p_stats
-	potion_sub_type = p_potion_sub_types
+	texture = p_texture
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BulletResource" load_steps=3 format=3 uid="uid://vox77tmuh5xx"]
+
+[ext_resource type="Script" path="res://resources/items/weapons/bullet_resource.gd" id="1_71reu"]
+[ext_resource type="Texture2D" uid="uid://bg5ghfjudn2ss" path="res://assets/enemy_blockout.png" id="2_vy0xx"]
+
+[resource]
+script = ExtResource("1_71reu")
+bullet_speed = 600
+knockback_power = 300.0
+texture = ExtResource("2_vy0xx")

@@ -10,10 +10,14 @@ const SPEED = 500.0
 @onready var pickup_area: Area2D = $PickupArea
 
 
-var weapon_inventory: Array[ItemResource] = []
+var weapon_inventory: Array[WeaponResource] = []
 var armor_inventory: Array[ItemResource] = []
 var consumable_inventory: Array[ItemResource] = []
 var currency: int = 0
+
+# TODO: wrap this in some kind of structure
+var current_weapon: WeaponResource = null
+var current_weapon_index: int = 0
 
 var health: int
 var mana: int
@@ -24,6 +28,9 @@ var last_direction: Vector2 = Vector2(0.0, 1.0)
 func _ready() -> void:
 	health = player_stats.max_health
 	mana = player_stats.max_mana
+	if current_weapon:
+		gun.set_stats(current_weapon)
+
 	animated_sprite.play("default")
 	pickup_area.item_pickup.connect(_handle_item_pickup)
 	weapon.animation_player.animation_finished.connect(_on_sword_timeout)
@@ -44,6 +51,7 @@ func _physics_process(_delta) -> void:
 
 	handle_walk_anim(direction)
 	# handle_sword()
+	gun_swap()
 	shoot_gun()
 	move_and_slide()
 
@@ -64,6 +72,16 @@ func shoot_gun() -> void:
 	if Input.is_action_just_pressed("attack"):
 		gun.shoot()
 
+func gun_swap() -> void:
+	if Input.is_action_just_pressed("prev_weapon"):
+		print_debug("prev weapon")
+		prev_weapon()
+		return
+	if Input.is_action_just_pressed("next_weapon"):
+		print_debug("next weapon")
+		next_weapon()
+		return
+
 func handle_sword() -> void:
 	if Input.is_action_just_pressed("attack"):
 		var direction = "down"
@@ -83,15 +101,39 @@ func handle_sword() -> void:
 		cant_move = true
 		weapon.swing()
 
+func next_weapon():
+	if weapon_inventory.size() > 0:
+		current_weapon_index += 1
+		if current_weapon_index >= weapon_inventory.size():
+			current_weapon_index = 0
+
+		current_weapon = weapon_inventory[current_weapon_index]
+		set_gun(current_weapon)
+
+func prev_weapon():
+	if weapon_inventory.size() > 0:
+		current_weapon_index -= 1
+		if current_weapon_index <= -1:
+			current_weapon_index = weapon_inventory.size() - 1
+
+		current_weapon = weapon_inventory[current_weapon_index]
+		set_gun(current_weapon)
+
+func set_gun(weapon_stats: WeaponResource):
+	gun.set_stats(weapon_stats)
+
 func _handle_item_pickup(item: Item) -> void:
 	print_debug(item)
 	var spent = false
 	if item.resource.type == ItemResource.ItemType.WEAPON:
 		print_debug("Got Weapon")
 		weapon_inventory.append(item.resource)
+		if !current_weapon:
+			current_weapon = item.resource 
+			gun.set_stats(current_weapon)
 		# player_stats.attack_damage += item.resource.stats
 		spent = true
-		_print_resource_list(weapon_inventory)
+		_print_weapon_list(weapon_inventory)
 	if item.resource.type == ItemResource.ItemType.ARMOR:
 		print_debug("Got Armor")
 		# player_stats.armor += item.resource.stats
@@ -110,27 +152,16 @@ func _handle_item_pickup(item: Item) -> void:
 		currency += item.resource.stats
 		print_debug(currency)
 		spent = true
-
-		# if item.resource.potion_sub_type == ItemResource.PotionTypes.HEALTH:
-		# 	print_debug("health potion")
-		# 	if health != player_stats.max_health:
-		# 		spent = true
-		# 		health += item.resource.stats
-		# 		if health > player_stats.max_health:
-		# 			health = player_stats.max_health
-		# 	print_debug(health)
-		# if item.resource.potion_sub_type == ItemResource.PotionTypes.MANA:
-		# 	print_debug("mana potion")
-		# 	if mana != player_stats.max_mana:
-		# 		spent = true
-		# 		mana += item.resource.stats
-		# 		if mana > player_stats.max_mana:
-		# 			mana = player_stats.max_mana
-		# 	print_debug(mana)
 	
 	if spent:
 		item.queue_free()
-	
+
+
+func _print_weapon_list(list: Array[WeaponResource])->void:
+	for res in list:
+		print_debug(res)
+		print_debug(res.weapon_type)
+		print_debug(res.attack_speed)
 
 func _print_resource_list(list: Array[ItemResource]) -> void:
 	for res in list:

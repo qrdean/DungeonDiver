@@ -6,6 +6,8 @@ class_name Item extends Node2D
 
 func _ready():
 	if resource:
+		if resource.texture:
+			$ItemBlockout.texture = resource.texture
 		pass
 	else:
 		print_debug("Error: resource not set")

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=5 format=3 uid="uid://dox5aanm8luty"]
+
+[ext_resource type="PackedScene" uid="uid://bmh5b2ubnpvu" path="res://player/gun_bullet.tscn" id="1_5kkyi"]
+[ext_resource type="Resource" uid="uid://blbchnqtdp512" path="res://resources/items/weapons/pistol_bullet.tres" id="1_gvw5g"]
+[ext_resource type="Script" path="res://resources/items/weapons/weapon_resource.gd" id="1_omvk4"]
+[ext_resource type="Texture2D" uid="uid://deimolf0r0dk8" path="res://assets/item_blockout.png" id="4_ls0p5"]
+
+[resource]
+script = ExtResource("1_omvk4")
+weapon_type = 1
+attack_speed = 5.0
+bullet_scene = ExtResource("1_5kkyi")
+bullet_resource = ExtResource("1_gvw5g")
+type = 0
+stats = 0
+texture = ExtResource("4_ls0p5")

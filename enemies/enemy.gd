@@ -59,7 +59,7 @@ func take_damage(knockback_dir: Vector2) -> void:
 
 func _spawn_item() -> void:
 	var coin_instance: Item = coin.instantiate() as Item
-	coin_instance.resource = ItemResource.new(ItemResource.ItemType.COIN, enemy_stats.currency, ItemResource.PotionTypes.NONE)
+	coin_instance.resource = ItemResource.new(ItemResource.ItemType.COIN, enemy_stats.currency)
 	coin_instance.global_position = self.global_position
 	add_sibling.call_deferred(coin_instance)
 
