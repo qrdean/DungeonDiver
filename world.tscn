@@ -1,14 +1,17 @@
 [gd_scene load_steps=17 format=3 uid="uid://fh3uh8c1daqd"]
 
 [ext_resource type="Texture2D" uid="uid://exlqy1lgm5tq" path="res://assets/tilemap.png" id="1_3jf5i"]
+[ext_resource type="Script" path="res://world.gd" id="1_ydt2j"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_8aclg"]
 [ext_resource type="Script" path="res://resources/player_stats.gd" id="3_jw7b5"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="3_ophb3"]
-[ext_resource type="PackedScene" uid="uid://d4ncufhvpp51u" path="res://enemies/enemy.tscn" id="5_rvxgj"]
-[ext_resource type="Script" path="res://resources/enemies/base_enemy.gd" id="6_cdpel"]
 [ext_resource type="PackedScene" uid="uid://cbfmy36pfmwax" path="res://item.tscn" id="7_225vb"]
 [ext_resource type="Resource" uid="uid://dox5aanm8luty" path="res://resources/items/weapons/pistol.tres" id="8_jdiil"]
 [ext_resource type="Resource" uid="uid://cvcqmjjphb6ga" path="res://resources/items/weapons/long_gun.tres" id="9_fbla0"]
+[ext_resource type="Texture2D" uid="uid://deimolf0r0dk8" path="res://assets/item_blockout.png" id="10_hmbok"]
+[ext_resource type="PackedScene" uid="uid://dp0q8v0vbeh8y" path="res://items/chest.tscn" id="10_j5tqo"]
+[ext_resource type="Resource" uid="uid://c0y26sldwc3m8" path="res://resources/items/armor_resource.tres" id="10_seajk"]
+[ext_resource type="Script" path="res://resources/items/items_resource.gd" id="11_1p7fu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gpgk1"]
 texture = ExtResource("1_3jf5i")
@@ -121,39 +124,14 @@ armor = 5
 max_health = 10
 max_mana = 10
 
-[sub_resource type="Resource" id="Resource_btdf3"]
-script = ExtResource("6_cdpel")
-health = 10
-move_speed = 100.0
-attack_speed = 5.0
-radial_distance = 100
-currency = 1
-
-[sub_resource type="Resource" id="Resource_rs6yx"]
-script = ExtResource("6_cdpel")
-health = 5
-move_speed = 50.0
-attack_speed = 1.0
-radial_distance = 200
-currency = 5
-
-[sub_resource type="Resource" id="Resource_67d5p"]
-script = ExtResource("6_cdpel")
-health = 5
-move_speed = 75.0
-attack_speed = 2.0
-radial_distance = 150
-currency = 5
-
-[sub_resource type="Resource" id="Resource_3qghq"]
-script = ExtResource("6_cdpel")
-health = 10
-move_speed = 100.0
-attack_speed = 5.0
-radial_distance = 100
-currency = 5
+[sub_resource type="Resource" id="Resource_dqwbu"]
+script = ExtResource("11_1p7fu")
+type = 3
+stats = 5
+texture = ExtResource("10_hmbok")
 
 [node name="World" type="Node2D"]
+script = ExtResource("1_ydt2j")
 metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -175,30 +153,6 @@ limit_bottom = 800
 script = ExtResource("3_ophb3")
 node_to_follow = NodePath("../Player")
 
-[node name="enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
-visible = false
-position = Vector2(430, 153)
-enemy_stats = SubResource("Resource_btdf3")
-player = NodePath("../Player")
-
-[node name="enemy2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
-visible = false
-position = Vector2(157, 137)
-enemy_stats = SubResource("Resource_rs6yx")
-player = NodePath("../Player")
-
-[node name="enemy3" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
-visible = false
-position = Vector2(160, 279)
-enemy_stats = SubResource("Resource_67d5p")
-player = NodePath("../Player")
-
-[node name="enemy4" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_rvxgj")]
-visible = false
-position = Vector2(435, 279)
-enemy_stats = SubResource("Resource_3qghq")
-player = NodePath("../Player")
-
 [node name="weapon1" parent="." instance=ExtResource("7_225vb")]
 position = Vector2(653, 210)
 resource = ExtResource("8_jdiil")
@@ -206,3 +160,12 @@ resource = ExtResource("8_jdiil")
 [node name="weapon2" parent="." instance=ExtResource("7_225vb")]
 position = Vector2(589, 212)
 resource = ExtResource("9_fbla0")
+
+[node name="armor" parent="." instance=ExtResource("7_225vb")]
+position = Vector2(528, 265)
+resource = ExtResource("10_seajk")
+
+[node name="chest" parent="." instance=ExtResource("10_j5tqo")]
+position = Vector2(260, 254)
+item_scene = ExtResource("7_225vb")
+item_resource = SubResource("Resource_dqwbu")

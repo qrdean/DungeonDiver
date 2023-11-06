@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp0q8v0vbeh8y"]
+
+[ext_resource type="Script" path="res://items/chest.gd" id="1_3ppke"]
+[ext_resource type="Texture2D" uid="uid://c76bkinysw032" path="res://assets/chest_blockout.png" id="2_8g2na"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mii6m"]
+radius = 22.0
+
+[node name="chest" type="Node2D"]
+script = ExtResource("1_3ppke")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8g2na")
+
+[node name="interactable_area" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interactable_area"]
+shape = SubResource("CircleShape2D_mii6m")

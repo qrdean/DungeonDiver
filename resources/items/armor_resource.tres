@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="ItemResource" load_steps=2 format=3 uid="uid://c0y26sldwc3m8"]
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://c0y26sldwc3m8"]
 
 [ext_resource type="Script" path="res://resources/items/items_resource.gd" id="1_rjxar"]
+[ext_resource type="Texture2D" uid="uid://cmijgmiwufgfu" path="res://assets/melee_blockout.png" id="2_dbaou"]
 
 [resource]
 script = ExtResource("1_rjxar")
 type = 1
 stats = 5
-potion_sub_type = 0
+texture = ExtResource("2_dbaou")

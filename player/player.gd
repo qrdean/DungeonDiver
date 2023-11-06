@@ -5,10 +5,10 @@ const SPEED = 500.0
 @export var player_stats: PlayerStats
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var weapon: Node2D = $Weapon
 @onready var gun: Node2D = $Gun
 @onready var pickup_area: Area2D = $PickupArea
 
+signal attempt_interact
 
 var weapon_inventory: Array[WeaponResource] = []
 var armor_inventory: Array[ItemResource] = []
@@ -33,7 +33,12 @@ func _ready() -> void:
 
 	animated_sprite.play("default")
 	pickup_area.item_pickup.connect(_handle_item_pickup)
-	weapon.animation_player.animation_finished.connect(_on_sword_timeout)
+
+func _process(_delta) -> void:
+	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
+	handle_walk_anim(direction)
+	gun_swap()
+	interact()
 
 func _physics_process(_delta) -> void:
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
@@ -49,9 +54,6 @@ func _physics_process(_delta) -> void:
 	if cant_move:
 		velocity = Vector2.ZERO
 
-	handle_walk_anim(direction)
-	# handle_sword()
-	gun_swap()
 	shoot_gun()
 	move_and_slide()
 
@@ -72,34 +74,17 @@ func shoot_gun() -> void:
 	if Input.is_action_just_pressed("attack"):
 		gun.shoot()
 
+func interact() -> void:
+	if Input.is_action_just_pressed("interact"):
+		attempt_interact.emit()
+
 func gun_swap() -> void:
 	if Input.is_action_just_pressed("prev_weapon"):
-		print_debug("prev weapon")
 		prev_weapon()
 		return
 	if Input.is_action_just_pressed("next_weapon"):
-		print_debug("next weapon")
 		next_weapon()
 		return
-
-func handle_sword() -> void:
-	if Input.is_action_just_pressed("attack"):
-		var direction = "down"
-		if last_direction.x > 0:
-			direction = "right"
-			weapon.position = Vector2(30, 0)
-		if last_direction.y > 0:
-			direction = "down"
-			weapon.position = Vector2(0, 30)
-		if last_direction.x < 0:
-			direction = "left"
-			weapon.position = Vector2(-30, 0)
-		if last_direction.y < 0:
-			direction = "up"
-			weapon.position = Vector2(0, -30)
-		weapon.set_direction(direction)
-		cant_move = true
-		weapon.swing()
 
 func next_weapon():
 	if weapon_inventory.size() > 0:
@@ -133,19 +118,15 @@ func _handle_item_pickup(item: Item) -> void:
 			gun.set_stats(current_weapon)
 		# player_stats.attack_damage += item.resource.stats
 		spent = true
-		_print_weapon_list(weapon_inventory)
 	if item.resource.type == ItemResource.ItemType.ARMOR:
 		print_debug("Got Armor")
 		# player_stats.armor += item.resource.stats
 		armor_inventory.append(item.resource)
 		spent = true
-		_print_resource_list(armor_inventory)
-		# print_debug(player_stats.armor)
 	if item.resource.type == ItemResource.ItemType.POTION:
 		print_debug("Got Potion")
 		consumable_inventory.append(item.resource)
 		spent = true
-		_print_resource_list(consumable_inventory)
 
 	if item.resource.type == ItemResource.ItemType.COIN:
 		print_debug("Got Coin")
@@ -169,6 +150,3 @@ func _print_resource_list(list: Array[ItemResource]) -> void:
 		print_debug(res.stats)
 		print_debug(res.potion_sub_type)
 
-func _on_sword_timeout() -> void:
-	print_debug("in player script")
-	cant_move = false
