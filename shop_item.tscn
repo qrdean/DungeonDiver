@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ceeoblmmrv4ah"]
+[gd_scene load_steps=5 format=3 uid="uid://ceeoblmmrv4ah"]
 
 [ext_resource type="Script" path="res://shop_item.gd" id="1_x8fba"]
 [ext_resource type="Texture2D" uid="uid://deimolf0r0dk8" path="res://assets/item_blockout.png" id="2_d733u"]
+[ext_resource type="PackedScene" uid="uid://cbfmy36pfmwax" path="res://item.tscn" id="2_gsjwa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqcrw"]
 size = Vector2(20, 47)
@@ -9,6 +10,7 @@ size = Vector2(20, 47)
 [node name="ShopItem" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_x8fba")
+item_scene = ExtResource("2_gsjwa")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_d733u")

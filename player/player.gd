@@ -13,7 +13,7 @@ signal attempt_interact
 var weapon_inventory: Array[WeaponResource] = []
 var armor_inventory: Array[ItemResource] = []
 var consumable_inventory: Array[ItemResource] = []
-var currency: int = 0
+var currency: int = 1000
 
 # TODO: wrap this in some kind of structure
 var current_weapon: WeaponResource = null
@@ -150,3 +150,8 @@ func _print_resource_list(list: Array[ItemResource]) -> void:
 		print_debug(res.stats)
 		print_debug(res.potion_sub_type)
 
+func remove_currency(p_currency: int):
+	currency -= p_currency
+	if currency < 0:
+		currency = 0
+	
