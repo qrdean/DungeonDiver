@@ -1,9 +1,11 @@
-extends Node2D
+class_name World extends Node2D
 
 @onready var item_scene = preload("res://item.tscn")
 
 @onready var left_decision = $LeftDecision
 @onready var right_decision = $RightDecision
+
+signal change_level(level_data: LevelData, decision: String)
 
 var root_node: LevelTree.TreeNode
 var current_node: LevelTree.TreeNode
@@ -11,15 +13,18 @@ var current_node: LevelTree.TreeNode
 func _ready():
 	# We can now pass this node around as level data. Should set a current position on 
 	# the node to load current level data. 
-	root_node = LevelTree.generate_binary_tree(5)
-	current_node = root_node
+	# root_node = LevelTree.generate_binary_tree(2)
+	# LevelTree.inOrderTraversal(root_node) 
+	# current_node = root_node
+
+	# print_debug(current_node.id)
 
 	left_decision.body_entered.connect(_on_player_enter_left)
 	left_decision.body_exited.connect(_on_player_exit_left)
 
 	right_decision.body_entered.connect(_on_player_enter_right)
 	right_decision.body_exited.connect(_on_player_exit_right)
-	print_debug(root_node)
+	# print_debug(root_node)
 
 ## Example of getting the static resource file from the base resource class in code.
 ## just a static function that returns a WeaponResource using load(path_to_resource)
@@ -44,8 +49,10 @@ func _left_decision():
 		print_debug("we've reached the end")
 		return
 
-	print_debug("going down left path")
-	print_debug(current_node.left.level_data)
+	change_level.emit(current_node.left.level_data, "left") 
+	# print_debug("going down left path")
+	# print_debug(current_node.right.level_data.id)
+	# print_debug(current_node.right.level_data.level_type)
 	current_node = current_node.left
 
 func _on_player_enter_right(body: Node2D):
@@ -62,6 +69,8 @@ func _right_decision():
 		print_debug("we've reached the end")
 		return
 
-	print_debug("going down right path")
-	print_debug(current_node.right.level_data)
+	change_level.emit(current_node.right.level_data, "right") 
+	# print_debug("going down right path")
+	# print_debug(current_node.right.level_data.id)
+	# print_debug(current_node.right.level_data.level_type)
 	current_node = current_node.right
