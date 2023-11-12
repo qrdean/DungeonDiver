@@ -35,9 +35,10 @@ static func generate_binary_tree(depth: int):
 		else:
 			for j in range(size):
 				var node: TreeNode = queue.pop_front()
-				var left_level_data = LevelData.new_level_type(id, LevelData.LevelType.COMBAT, null, "res://World.tscn")
+				var path = "res://levels/depth/" + str(i) + "/level.tscn"
+				var left_level_data = LevelData.new_level_type(id, LevelData.LevelType.COMBAT, null, path)
 				id += 1
-				var right_level_data = LevelData.new_level_type(id, LevelData.LevelType.COMBAT, null, "res://World.tscn")
+				var right_level_data = LevelData.new_level_type(id, LevelData.LevelType.COMBAT, null, path)
 				id += 1
 				node.left = init_tree_node(left_level_data)
 				node.right = init_tree_node(right_level_data)

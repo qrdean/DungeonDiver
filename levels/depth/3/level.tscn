@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://by85u0hrvisku"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_ru37a"]
+[ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_s65lm"]
+[ext_resource type="Script" path="res://resources/player_stats.gd" id="3_ctcd7"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="4_x0dne"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_m478l"]
+
+[sub_resource type="Resource" id="Resource_oon7e"]
+script = ExtResource("3_ctcd7")
+attack_damage = 10
+armor = 5
+max_health = 10
+max_mana = 10
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_satgm"]
+radius = 27.4591
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gtqae"]
+radius = 33.0151
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_ru37a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.690196, 0, 0.756863, 1)
+position = Vector2(328.75, 189.75)
+scale = Vector2(658.5, 380.5)
+texture = SubResource("CanvasTexture_m478l")
+
+[node name="Player" parent="." instance=ExtResource("2_s65lm")]
+position = Vector2(258, 150)
+player_stats = SubResource("Resource_oon7e")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("node_to_follow")]
+position = Vector2(321, 180)
+limit_left = 0
+limit_top = 0
+limit_right = 1490
+limit_bottom = 800
+script = ExtResource("4_x0dne")
+node_to_follow = NodePath("../Player")
+
+[node name="LeftDecision" type="Area2D" parent="."]
+position = Vector2(247, 28)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDecision"]
+shape = SubResource("CircleShape2D_satgm")
+metadata/_edit_lock_ = true
+
+[node name="RightDecision" type="Area2D" parent="."]
+position = Vector2(331, 28)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightDecision"]
+shape = SubResource("CircleShape2D_gtqae")
+metadata/_edit_lock_ = true
