@@ -1,10 +1,12 @@
-[gd_scene load_steps=20 format=3 uid="uid://fh3uh8c1daqd"]
+[gd_scene load_steps=22 format=3 uid="uid://fh3uh8c1daqd"]
 
 [ext_resource type="Texture2D" uid="uid://exlqy1lgm5tq" path="res://assets/tilemap.png" id="1_3jf5i"]
 [ext_resource type="Script" path="res://world.gd" id="1_ydt2j"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_8aclg"]
+[ext_resource type="Script" path="res://Spawner.gd" id="3_4kxtg"]
 [ext_resource type="Script" path="res://resources/player_stats.gd" id="3_jw7b5"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="3_ophb3"]
+[ext_resource type="PackedScene" uid="uid://d4ncufhvpp51u" path="res://enemies/enemy.tscn" id="4_21pcg"]
 [ext_resource type="PackedScene" uid="uid://cbfmy36pfmwax" path="res://item.tscn" id="7_225vb"]
 [ext_resource type="Resource" uid="uid://dox5aanm8luty" path="res://resources/items/weapons/pistol.tres" id="8_jdiil"]
 [ext_resource type="Resource" uid="uid://cvcqmjjphb6ga" path="res://resources/items/weapons/long_gun.tres" id="9_fbla0"]
@@ -150,6 +152,12 @@ layer_0/tile_data = PackedInt32Array(1, 65536, 0, 65537, 0, 4, 131073, 0, 4, 196
 [node name="RandomTimer" type="Timer" parent="."]
 one_shot = true
 autostart = true
+
+[node name="Spawner" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("3_4kxtg")
+enemy_scene = ExtResource("4_21pcg")
+spawn_points = Array[Vector2]([Vector2(125, 125), Vector2(300, 300), Vector2(50, 50), Vector2(250, 300)])
+player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_8aclg")]
 position = Vector2(258, 150)

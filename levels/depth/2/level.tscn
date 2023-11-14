@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cvg01hw7sauti"]
+[gd_scene load_steps=11 format=3 uid="uid://cvg01hw7sauti"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_mnd1e"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_mkc7j"]
+[ext_resource type="Script" path="res://Spawner.gd" id="2_xrnts"]
+[ext_resource type="PackedScene" uid="uid://d4ncufhvpp51u" path="res://enemies/enemy.tscn" id="3_e4e8h"]
 [ext_resource type="Script" path="res://resources/player_stats.gd" id="3_prqcm"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="4_gng2t"]
 
@@ -28,6 +30,12 @@ modulate = Color(0, 0.52549, 0.211765, 1)
 position = Vector2(328.75, 189.75)
 scale = Vector2(658.5, 380.5)
 texture = SubResource("CanvasTexture_merxk")
+
+[node name="Spawner" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("2_xrnts")
+enemy_scene = ExtResource("3_e4e8h")
+spawn_points = Array[Vector2]([Vector2(125, 125), Vector2(300, 300), Vector2(50, 50), Vector2(250, 300)])
+player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_mkc7j")]
 position = Vector2(258, 150)

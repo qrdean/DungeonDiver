@@ -47,8 +47,6 @@ func get_next_node(decision: World.LevelDecision) -> LevelTree.TreeNode:
 			return current_node.right
 	return null
 
-func set_next_tree_node(new_node, new_level):
-	new_level.current_node = new_node 
-
+## Sets the player data inside the new scene
 func set_player_data(old_scene, new_scene):
 	new_scene.player.set_current_state(old_scene.player.get_current_state())

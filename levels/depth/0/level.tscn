@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cx3qoofleb1hy"]
+[gd_scene load_steps=11 format=3 uid="uid://cx3qoofleb1hy"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_ngrnl"]
+[ext_resource type="Script" path="res://Spawner.gd" id="2_pml7d"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="2_r6ybi"]
+[ext_resource type="PackedScene" uid="uid://d4ncufhvpp51u" path="res://enemies/enemy.tscn" id="3_3q7ow"]
 [ext_resource type="Script" path="res://resources/player_stats.gd" id="3_5xyad"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="4_f0wwq"]
 
@@ -23,11 +25,21 @@ radius = 33.0151
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_ngrnl")
 
+[node name="RandomTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0, 0.47451, 0.647059, 1)
 position = Vector2(328.75, 189.75)
 scale = Vector2(658.5, 380.5)
 texture = SubResource("CanvasTexture_m478l")
+
+[node name="Spawner" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("2_pml7d")
+enemy_scene = ExtResource("3_3q7ow")
+spawn_points = Array[Vector2]([Vector2(125, 125), Vector2(300, 300), Vector2(50, 50), Vector2(250, 300)])
+player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_r6ybi")]
 position = Vector2(258, 150)
@@ -57,7 +69,3 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightDecision"]
 shape = SubResource("CircleShape2D_gtqae")
 metadata/_edit_lock_ = true
-
-[node name="RandomTimer" type="Timer" parent="."]
-one_shot = true
-autostart = true

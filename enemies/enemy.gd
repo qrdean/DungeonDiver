@@ -16,6 +16,8 @@ var windup: bool = false
 var randomnum: float
 var rng = RandomNumberGenerator.new()
 
+signal enemy_death
+
 func _ready() -> void:
 	rng.randomize()
 	randomnum = rng.randf()
@@ -55,6 +57,7 @@ func take_damage(knockback_dir: Vector2) -> void:
 	health -= 1
 	if health <= 0:
 		_spawn_item()
+		enemy_death.emit()
 		self.queue_free()
 
 func _spawn_item() -> void:

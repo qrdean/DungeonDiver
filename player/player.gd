@@ -27,8 +27,11 @@ var cant_move: bool = false
 var last_direction: Vector2 = Vector2(0.0, 1.0)
 
 func _ready() -> void:
-	health = player_stats.max_health
-	mana = player_stats.max_mana
+	if !health:
+		health = player_stats.max_health
+	if !mana:
+		mana = player_stats.max_mana
+
 	if current_weapon:
 		gun.set_stats(current_weapon)
 
@@ -157,6 +160,7 @@ func remove_currency(p_currency: int):
 		currency = 0
 	
 
+## Helper function to get all the persistent properties 
 func get_current_state() -> Dictionary:
 	return {
 		'weapon_inventory': weapon_inventory,  
@@ -164,9 +168,13 @@ func get_current_state() -> Dictionary:
 		'consumable_inventory': consumable_inventory,
 		'currency': currency,
 		'current_weapon': current_weapon,
-		'current_weapon_index': current_weapon_index
+		'current_weapon_index': current_weapon_index,
+		'health': health,
+		'mana': mana
 	}
 
+## Helper function to set all the persistent properties. 
+# state is a dictionary tied to the above function. Use these functions together
 func set_current_state(state: Dictionary):
 	weapon_inventory = state['weapon_inventory']
 	armor_inventory = state['armor_inventory']
@@ -174,5 +182,7 @@ func set_current_state(state: Dictionary):
 	currency = state['currency']
 	current_weapon = state['current_weapon']
 	current_weapon_index = state['current_weapon_index']
+	health = state['health']
+	mana = state['mana']
 	set_gun(current_weapon)
 
