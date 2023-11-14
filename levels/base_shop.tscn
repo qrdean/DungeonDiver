@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=3 uid="uid://2bw7ecs58y25"]
+
+[ext_resource type="Script" path="res://Spawner.gd" id="1_7ve51"]
+[ext_resource type="Script" path="res://world.gd" id="1_d5a0y"]
+[ext_resource type="PackedScene" uid="uid://d4ncufhvpp51u" path="res://enemies/enemy.tscn" id="2_c63e5"]
+[ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="3_kf7jd"]
+[ext_resource type="Script" path="res://resources/player_stats.gd" id="4_vpmhg"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="5_edm1r"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ffljc"]
+
+[sub_resource type="Resource" id="Resource_apm2v"]
+script = ExtResource("4_vpmhg")
+attack_damage = 10
+armor = 5
+max_health = 10
+max_mana = 10
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bo051"]
+radius = 27.4591
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e2egl"]
+radius = 33.0151
+
+[node name="base_shop" type="Node2D"]
+script = ExtResource("1_d5a0y")
+
+[node name="RandomTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.882353, 0.870588, 0.854902, 1)
+position = Vector2(328.75, 189.75)
+scale = Vector2(658.5, 380.5)
+texture = SubResource("CanvasTexture_ffljc")
+
+[node name="Player" parent="." instance=ExtResource("3_kf7jd")]
+position = Vector2(258, 150)
+player_stats = SubResource("Resource_apm2v")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("node_to_follow")]
+position = Vector2(321, 180)
+limit_left = 0
+limit_top = 0
+limit_right = 1490
+limit_bottom = 800
+script = ExtResource("5_edm1r")
+node_to_follow = NodePath("../Player")
+
+[node name="LeftDecision" type="Area2D" parent="."]
+position = Vector2(247, 28)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDecision"]
+shape = SubResource("CircleShape2D_bo051")
+metadata/_edit_lock_ = true
+
+[node name="RightDecision" type="Area2D" parent="."]
+position = Vector2(331, 28)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightDecision"]
+shape = SubResource("CircleShape2D_e2egl")
+metadata/_edit_lock_ = true
+
+[node name="Spawner" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("1_7ve51")
+enemy_scene = ExtResource("2_c63e5")
+spawn_points = Array[Vector2]([Vector2(125, 125), Vector2(300, 300), Vector2(50, 50), Vector2(250, 300)])
+player = NodePath("")

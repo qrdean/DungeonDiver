@@ -5,7 +5,7 @@ class_name World extends Node2D
 @onready var left_decision = $LeftDecision
 @onready var right_decision = $RightDecision
 @onready var player: Player = $Player
-@onready var spawner: WaveManager = $Spawner
+@onready var wave_manager: WaveManager = $Spawner
 
 @onready var timer: Timer = $RandomTimer
 
@@ -19,14 +19,19 @@ enum LevelDecision{
 var level_data: LevelData
 
 func _ready():
-	timer.timeout.connect(spawn_an_item)
+	# timer.timeout.connect(spawn_an_item)
 	left_decision.body_entered.connect(_on_player_enter_left)
 	left_decision.body_exited.connect(_on_player_exit_left)
 
 	right_decision.body_entered.connect(_on_player_enter_right)
 	right_decision.body_exited.connect(_on_player_exit_right)
 
-	spawner.wave_start()
+	
+	if level_data and wave_manager and level_data.level_type == LevelData.LevelType.COMBAT:
+		wave_manager.level_beaten.connect(spawn_an_item)
+		wave_manager.wave_start()
+	else:
+		print_debug("we are at the start or not combat room")
 
 ## Example of getting the static resource file from the base resource class in code.
 ## just a static function that returns a WeaponResource using load(path_to_resource)

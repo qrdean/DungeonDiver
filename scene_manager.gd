@@ -1,5 +1,9 @@
 class_name SceneManager extends Node
 
+# A lower level scene manager to manage specifically the Tree Nodes
+# won't work currently with general scenes like a hub. Want to refactor 
+# this to a different node name when we implement a hub or something of that sort
+
 @onready var current_level: World = $World
 
 var root_node: LevelTree.TreeNode
@@ -7,7 +11,7 @@ var current_node: LevelTree.TreeNode
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	root_node = LevelTree.generate_binary_tree(5)
+	root_node = LevelTree.generate_binary_tree(3)
 	# LevelTree.inOrderTraversal(root_node) 
 	current_node = root_node
 
@@ -31,9 +35,11 @@ func handle_level_changed(decision: World.LevelDecision):
 		return
 
 	var next_level: World = next_level_scene.instantiate()
-	add_child(next_level)
-	next_level.change_level.connect(handle_level_changed)
 	next_level.level_data = next_node.level_data
+	add_child(next_level)
+	
+	next_level.change_level.connect(handle_level_changed)
+
 	set_player_data(current_level, next_level)
 	current_node = next_node
 	current_level.queue_free()

@@ -11,14 +11,14 @@ const SPEED = 500.0
 signal attempt_interact
 
 # TODO: Need to pull out into a higher node to populate for each scene.
-var weapon_inventory: Array[WeaponResource] = []
+var weapon_inventory: Array[WeaponResource] = [WeaponResource.get_pistol_resource()]
 var armor_inventory: Array[ItemResource] = []
 var consumable_inventory: Array[ItemResource] = []
 var currency: int = 1000
 
 # TODO: wrap this in some kind of structure
-var current_weapon: WeaponResource = null
 var current_weapon_index: int = 0
+var current_weapon: WeaponResource = weapon_inventory[current_weapon_index]
 
 var health: int
 var mana: int

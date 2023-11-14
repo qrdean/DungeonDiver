@@ -26,25 +26,37 @@ static func generate_binary_tree(depth: int):
 	var queue: Array[TreeNode] = []
 	var i := 0
 
+	var shop_level_data = LevelData.new_level_type(0, LevelData.LevelType.SHOP, null, "res://levels/base_shop.tscn")
+	var boss_level_data = LevelData.new_level_type(0, LevelData.LevelType.BOSS, null, "res://levels/boss_room.tscn")
 	var root: TreeNode = init_tree_node(root_level_data)
 	queue.append(root)
+
+	var before_boss_shop_node: TreeNode = init_tree_node(shop_level_data)
+	var boss_node: TreeNode = init_tree_node(boss_level_data)
+	before_boss_shop_node.left = boss_node
+	before_boss_shop_node.right = before_boss_shop_node.left
 
 	while len(queue) > 0:
 		var size = len(queue)
 
 		i += 1
 		if i > depth:
+			for j in range(size):
+				queue[j].left = before_boss_shop_node
+				queue[j].right = queue[j].left
 			break
 		else:
 			for j in range(size):
 				var node: TreeNode = queue.pop_front()
-				var path = "res://levels/depth/" + str(i) + "/level.tscn"
 
 				var item = get_level_item(weapon_list, item_list)
 
-				var left_level_data = LevelData.new_level_type(id, LevelData.LevelType.COMBAT, item, path)
+				var level_type_left := get_level_type(i)
+				var level_type_right := get_level_type(i)
+
+				var left_level_data = LevelData.new_level_type(id, level_type_left.level_type, item, level_type_left.path)
 				id += 1
-				var right_level_data = LevelData.new_level_type(id, LevelData.LevelType.COMBAT, item, path)
+				var right_level_data = LevelData.new_level_type(id, level_type_right.level_type, item, level_type_right.path)
 				id += 1
 				node.left = init_tree_node(left_level_data)
 				node.right = init_tree_node(right_level_data)
@@ -95,3 +107,21 @@ static func get_random_item_path(item_list: Dictionary, unique: bool):
 # for now just returns if we want a weapon or not
 static func get_a_weapon() -> bool:
 	return randi() % 2
+
+static func get_level_type(current_depth: int) -> Dictionary:
+	var combat_path = "res://levels/depth/" + str(current_depth) + "/level.tscn"
+	var shop_path = "res://levels/base_shop.tscn"
+	var dict := {"level_type": null, "path": null}
+	if current_depth > 1:
+		if randi() % current_depth:
+			dict.level_type = LevelData.LevelType.SHOP
+			dict.path = shop_path
+			return dict
+		else:
+			dict.level_type = LevelData.LevelType.COMBAT
+			dict.path = combat_path
+			return dict
+	else:
+		dict.level_type = LevelData.LevelType.COMBAT
+		dict.path = combat_path
+		return dict
