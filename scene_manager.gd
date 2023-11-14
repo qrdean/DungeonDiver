@@ -7,7 +7,6 @@ var current_node: LevelTree.TreeNode
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
 	root_node = LevelTree.generate_binary_tree(5)
 	# LevelTree.inOrderTraversal(root_node) 
 	current_node = root_node
@@ -35,6 +34,7 @@ func handle_level_changed(decision: World.LevelDecision):
 	add_child(next_level)
 	next_level.change_level.connect(handle_level_changed)
 	next_level.level_data = next_node.level_data
+	set_player_data(current_level, next_level)
 	current_node = next_node
 	current_level.queue_free()
 	current_level = next_level
@@ -49,3 +49,6 @@ func get_next_node(decision: World.LevelDecision) -> LevelTree.TreeNode:
 
 func set_next_tree_node(new_node, new_level):
 	new_level.current_node = new_node 
+
+func set_player_data(old_scene, new_scene):
+	new_scene.player.set_current_state(old_scene.player.get_current_state())

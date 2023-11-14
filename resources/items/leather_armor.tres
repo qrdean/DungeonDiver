@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://0qlse7b41mhm"]
+
+[ext_resource type="Script" path="res://resources/items/items_resource.gd" id="1_jrfcl"]
+[ext_resource type="Texture2D" uid="uid://c76bkinysw032" path="res://assets/chest_blockout.png" id="2_qclpk"]
+
+[resource]
+script = ExtResource("1_jrfcl")
+type = 1
+stats = 10
+texture = ExtResource("2_qclpk")

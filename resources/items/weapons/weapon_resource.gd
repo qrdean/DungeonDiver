@@ -17,8 +17,21 @@ func _init(p_weapon_type = WeaponType.RANGED, p_attack_speed = 10.0, p_bullet_sc
 	bullet_scene = p_bullet_scene
 	bullet_resource = p_bullet_resource
 
+enum WeaponsList {
+	PISTOL,
+  LONG_GUN 
+}
+
+static var weapon_resource_path_dictionary: Dictionary = {
+	WeaponsList.PISTOL: "res://resources/items/weapons/pistol.tres",
+	WeaponsList.LONG_GUN: "res://resources/items/weapons/long_gun.tres"
+}
+
+static func get_weapon_resource_path_dictionary() -> Dictionary:
+	return weapon_resource_path_dictionary
+
 static func get_pistol_resource() -> WeaponResource:
-	return load("res://resources/items/weapons/pistol.tres") as WeaponResource
+	return load(weapon_resource_path_dictionary[WeaponsList.PISTOL]) as WeaponResource
 
 static func get_long_gun_resource() -> WeaponResource:
-	return load("res://resources/items/weapons/long_gun.tres") as WeaponResource
+	return load(weapon_resource_path_dictionary[WeaponsList.LONG_GUN]) as WeaponResource

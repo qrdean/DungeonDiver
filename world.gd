@@ -4,6 +4,9 @@ class_name World extends Node2D
 
 @onready var left_decision = $LeftDecision
 @onready var right_decision = $RightDecision
+@onready var player: Player = $Player
+
+@onready var timer: Timer = $RandomTimer
 
 signal change_level(decision: LevelDecision)
 
@@ -15,6 +18,7 @@ enum LevelDecision{
 var level_data: LevelData
 
 func _ready():
+	timer.timeout.connect(spawn_an_item)
 	left_decision.body_entered.connect(_on_player_enter_left)
 	left_decision.body_exited.connect(_on_player_exit_left)
 
@@ -24,10 +28,16 @@ func _ready():
 ## Example of getting the static resource file from the base resource class in code.
 ## just a static function that returns a WeaponResource using load(path_to_resource)
 func spawn_an_item():
-	var item: Item = item_scene.instantiate()
-	item.resource = WeaponResource.get_pistol_resource()
-	item.global_position = Vector2(125.0, 125.0)
-	call_deferred("add_child", item)
+	print_debug(level_data)
+	if level_data:
+		print_debug(level_data.reward_item)
+
+	if level_data and level_data.reward_item:
+		var item: Item = item_scene.instantiate()
+		item.resource = level_data.reward_item
+		## Make a marker for visual purposes
+		item.global_position = Vector2(125.0, 125.0)
+		call_deferred("add_child", item)
 
 func _on_player_enter_left(body: Node2D):
 	if body is Player:

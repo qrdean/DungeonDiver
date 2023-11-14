@@ -10,6 +10,7 @@ const SPEED = 500.0
 
 signal attempt_interact
 
+# TODO: Need to pull out into a higher node to populate for each scene.
 var weapon_inventory: Array[WeaponResource] = []
 var armor_inventory: Array[ItemResource] = []
 var consumable_inventory: Array[ItemResource] = []
@@ -155,3 +156,23 @@ func remove_currency(p_currency: int):
 	if currency < 0:
 		currency = 0
 	
+
+func get_current_state() -> Dictionary:
+	return {
+		'weapon_inventory': weapon_inventory,  
+		'armor_inventory': armor_inventory,
+		'consumable_inventory': consumable_inventory,
+		'currency': currency,
+		'current_weapon': current_weapon,
+		'current_weapon_index': current_weapon_index
+	}
+
+func set_current_state(state: Dictionary):
+	weapon_inventory = state['weapon_inventory']
+	armor_inventory = state['armor_inventory']
+	consumable_inventory = state['consumable_inventory']
+	currency = state['currency']
+	current_weapon = state['current_weapon']
+	current_weapon_index = state['current_weapon_index']
+	set_gun(current_weapon)
+
