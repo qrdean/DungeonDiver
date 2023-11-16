@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="BaseEnemyResource" load_steps=6 format=3 uid="uid://3vefuec4y41d"]
+
+[ext_resource type="Script" path="res://resources/enemies/base_enemy.gd" id="1_o3m1t"]
+[ext_resource type="Texture2D" uid="uid://bksmx6h5cge80" path="res://assets/boss_slime.png" id="2_wi2ei"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkpby"]
+atlas = ExtResource("2_wi2ei")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2byqf"]
+atlas = ExtResource("2_wi2ei")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ji0ji"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkpby")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2byqf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_o3m1t")
+health = 50
+move_speed = 100.0
+attack_speed = 5.0
+radial_distance = 10
+currency = 1000
+sprite_sheet = SubResource("SpriteFrames_ji0ji")

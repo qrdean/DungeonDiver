@@ -21,7 +21,6 @@ func handle_level_changed(decision: World.LevelDecision):
 	var next_node: LevelTree.TreeNode = get_next_node(decision)
 	if (!next_node):
 		print_debug("we've reached the end of the tree struct")
-		print_debug("double check each path tho")
 		if current_node.left != null:
 			next_node = current_node.left
 		elif current_node.right != null:

@@ -66,7 +66,8 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_cl2nb")
 metadata/_edit_lock_ = true
 
-[node name="Spawner" type="Node" parent="."]
+[node name="Spawner" type="Node" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("5_y76l5")
 enemy_scene = ExtResource("6_3pncv")
 spawn_points = Array[Vector2]([Vector2(125, 125), Vector2(300, 300), Vector2(50, 50), Vector2(250, 300)])
+player = NodePath("../Player")

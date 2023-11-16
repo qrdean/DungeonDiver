@@ -112,7 +112,6 @@ func set_gun(weapon_stats: WeaponResource):
 	gun.set_stats(weapon_stats)
 
 func _handle_item_pickup(item: Item) -> void:
-	print_debug(item)
 	var spent = false
 	if item.resource.type == ItemResource.ItemType.WEAPON:
 		print_debug("Got Weapon")
@@ -135,7 +134,6 @@ func _handle_item_pickup(item: Item) -> void:
 	if item.resource.type == ItemResource.ItemType.COIN:
 		print_debug("Got Coin")
 		currency += item.resource.stats
-		print_debug(currency)
 		spent = true
 	
 	if spent:

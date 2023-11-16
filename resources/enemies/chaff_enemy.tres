@@ -32,9 +32,9 @@ animations = [{
 
 [resource]
 script = ExtResource("1_ycwpq")
-health = 10
+health = 3
 move_speed = 100.0
 attack_speed = 5.0
-radial_distance = 10
+radial_distance = 5
 currency = 10
 sprite_sheet = SubResource("SpriteFrames_lon55")

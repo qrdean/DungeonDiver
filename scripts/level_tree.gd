@@ -33,6 +33,10 @@ static func generate_binary_tree(depth: int):
 
 	var before_boss_shop_node: TreeNode = init_tree_node(shop_level_data)
 	var boss_node: TreeNode = init_tree_node(boss_level_data)
+
+	boss_node.left = root
+	boss_node.right = root
+
 	before_boss_shop_node.left = boss_node
 	before_boss_shop_node.right = before_boss_shop_node.left
 
@@ -97,8 +101,7 @@ static func get_random_item_path(item_list: Dictionary, unique: bool):
 		return null
 
 	if unique:
-		var success = item_list.erase(index)
-		print_debug(success)
+		item_list.erase(index)
 
 	return item_path
 

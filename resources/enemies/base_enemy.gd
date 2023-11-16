@@ -20,3 +20,7 @@ func _init(p_health = 1, p_move_speed = 100.0, p_attack_speed = 1.0, p_radial_di
 
 static func get_chaff_resource() -> BaseEnemyResource:
 	return load("res://resources/enemies/chaff_enemy.tres") as BaseEnemyResource
+
+static func get_boss_slime() -> BaseEnemyResource:
+	return load("res://resources/enemies/boss_slime.tres") as BaseEnemyResource
+

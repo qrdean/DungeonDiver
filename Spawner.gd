@@ -18,7 +18,6 @@ func _ready():
 	pass
 
 func wave_start():
-	print_debug("starting wave")
 	enemies_dead = 0
 	current_wave += 1
 	for i in enemies_per_wave:
@@ -31,7 +30,6 @@ func spawn_enemy(i: int):
 	enemy_instance.global_position = spawn_points[i]
 	enemy_instance.enemy_death.connect(_on_enemy_death)
 	call_deferred("add_sibling", enemy_instance)
-	print_debug("enemy spawned")
 
 func wave_finish():
 	if current_wave < number_of_waves:
@@ -43,3 +41,14 @@ func _on_enemy_death():
 	enemies_dead += 1
 	if enemies_dead >= enemies_per_wave:
 		wave_finish()
+
+func boss_wave():
+	var enemy_instance = enemy_scene.instantiate()
+	enemy_instance.enemy_stats = BaseEnemyResource.get_boss_slime()
+	enemy_instance.player = player
+	enemy_instance.global_position = spawn_points[0]
+	enemy_instance.enemy_death.connect(_on_boss_death)
+	call_deferred('add_sibling', enemy_instance)
+
+func _on_boss_death():
+	level_beaten.emit()

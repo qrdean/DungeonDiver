@@ -5,7 +5,6 @@ class_name World extends Node2D
 @onready var right_decision: Area2D = $RightDecision
 @onready var player: Player = $Player
 @onready var wave_manager: WaveManager = $Spawner
-@onready var timer: Timer = $RandomTimer
 
 signal change_level(decision: LevelDecision)
 
@@ -23,13 +22,36 @@ func _ready():
 	right_decision.body_entered.connect(_on_player_enter_right)
 	right_decision.body_exited.connect(_on_player_exit_right)
 	
-	if level_data and wave_manager and level_data.level_type == LevelData.LevelType.COMBAT:
-		left_decision.visible = false
-		right_decision.visible = false
-		wave_manager.level_beaten.connect(room_beaten)
-		wave_manager.wave_start()
+	if level_data:
+		level_type_check(level_data.level_type)
 	else:
 		print_debug("we are at the start or not combat room")
+
+func level_type_check(level_type: LevelData.LevelType):
+	if level_type == null:
+		print_debug('level type is null')
+		return
+
+	match level_type:
+		LevelData.LevelType.START:
+			print_debug("start")
+		LevelData.LevelType.COMBAT:
+			left_decision.visible = false
+			right_decision.visible = false
+			wave_manager.level_beaten.connect(room_beaten)
+			wave_manager.wave_start()
+		LevelData.LevelType.SHOP:
+			left_decision.visible = true
+			right_decision.visible = true
+			# check for and initialize shop here
+		LevelData.LevelType.BOSS:
+			left_decision.visible = false
+			right_decision.visible = false
+			wave_manager.level_beaten.connect(room_beaten)
+			wave_manager.boss_wave()
+		_:
+			print_debug('not a valid level_type')
+			pass
 
 ## Example of getting the static resource file from the base resource class in code.
 ## just a static function that returns a WeaponResource using load(path_to_resource)
