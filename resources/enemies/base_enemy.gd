@@ -8,12 +8,15 @@ class_name BaseEnemyResource extends Resource
 
 @export var currency: int
 
-func _init(p_health = 1, p_move_speed = 100.0, p_attack_speed = 1.0, p_radial_distance = 100, p_currency = 1):
+@export var sprite_sheet: SpriteFrames
+
+func _init(p_health = 1, p_move_speed = 100.0, p_attack_speed = 1.0, p_radial_distance = 100, p_currency = 1, p_sprite_frames = null):
 	health = p_health
 	move_speed = p_move_speed
 	attack_speed = p_attack_speed
 	radial_distance = p_radial_distance
 	currency = p_currency
+	sprite_sheet = p_sprite_frames
 
 static func get_chaff_resource() -> BaseEnemyResource:
 	return load("res://resources/enemies/chaff_enemy.tres") as BaseEnemyResource

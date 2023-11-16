@@ -113,7 +113,8 @@ static func get_level_type(current_depth: int) -> Dictionary:
 	var shop_path = "res://levels/base_shop.tscn"
 	var dict := {"level_type": null, "path": null}
 	if current_depth > 1:
-		if randi() % current_depth:
+		# Flat 20% chance to spawn a shop
+		if (randi() % 100) > 80:
 			dict.level_type = LevelData.LevelType.SHOP
 			dict.path = shop_path
 			return dict

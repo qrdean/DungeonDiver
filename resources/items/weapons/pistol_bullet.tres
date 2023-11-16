@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="BulletResource" load_steps=3 format=3 uid="uid://blbchnqtdp512"]
 
 [ext_resource type="Script" path="res://resources/items/weapons/bullet_resource.gd" id="1_x1t03"]
-[ext_resource type="Texture2D" uid="uid://deimolf0r0dk8" path="res://assets/item_blockout.png" id="2_sidvu"]
+[ext_resource type="Texture2D" uid="uid://j024i5gc1yo" path="res://assets/ice_bolt.png" id="2_1w215"]
 
 [resource]
 script = ExtResource("1_x1t03")
 bullet_speed = 400
 knockback_power = 200.0
-texture = ExtResource("2_sidvu")
+texture = ExtResource("2_1w215")

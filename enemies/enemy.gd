@@ -23,6 +23,8 @@ func _ready() -> void:
 	randomnum = rng.randf()
 	if enemy_stats:
 		health = enemy_stats.health
+		if enemy_stats.sprite_sheet:
+			$AnimatedSprite2D.sprite_frames = enemy_stats.sprite_sheet
 
 	position_change_timer.wait_time = enemy_stats.attack_speed
 	player_checker_area.attack_player.connect(_attack)	

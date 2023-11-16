@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bmh5b2ubnpvu" path="res://player/gun_bullet.tscn" id="1_5kkyi"]
 [ext_resource type="Resource" uid="uid://blbchnqtdp512" path="res://resources/items/weapons/pistol_bullet.tres" id="1_gvw5g"]
 [ext_resource type="Script" path="res://resources/items/weapons/weapon_resource.gd" id="1_omvk4"]
-[ext_resource type="Texture2D" uid="uid://deimolf0r0dk8" path="res://assets/item_blockout.png" id="4_ls0p5"]
+[ext_resource type="Texture2D" uid="uid://cl687eep70v2q" path="res://assets/water_staff.png" id="4_86nso"]
 
 [resource]
 script = ExtResource("1_omvk4")
@@ -13,4 +13,4 @@ bullet_scene = ExtResource("1_5kkyi")
 bullet_resource = ExtResource("1_gvw5g")
 type = 0
 stats = 0
-texture = ExtResource("4_ls0p5")
+texture = ExtResource("4_86nso")

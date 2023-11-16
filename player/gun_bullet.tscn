@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmh5b2ubnpvu"]
+[gd_scene load_steps=5 format=3 uid="uid://bmh5b2ubnpvu"]
 
 [ext_resource type="Script" path="res://player/gun_bullet.gd" id="1_46a51"]
 [ext_resource type="Texture2D" uid="uid://bg5ghfjudn2ss" path="res://assets/enemy_blockout.png" id="1_uxsbo"]
+[ext_resource type="SpriteFrames" uid="uid://bqggae0kujjht" path="res://resources/new_sprite_frames.tres" id="3_8gbp6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xgslj"]
 
@@ -18,3 +19,7 @@ texture = ExtResource("1_uxsbo")
 shape = SubResource("RectangleShape2D_xgslj")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("3_8gbp6")
+animation = &"new_animation"

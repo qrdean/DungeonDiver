@@ -1,12 +1,10 @@
 class_name World extends Node2D
 
 @onready var item_scene = preload("res://item.tscn")
-
-@onready var left_decision = $LeftDecision
-@onready var right_decision = $RightDecision
+@onready var left_decision: Area2D = $LeftDecision
+@onready var right_decision: Area2D = $RightDecision
 @onready var player: Player = $Player
 @onready var wave_manager: WaveManager = $Spawner
-
 @onready var timer: Timer = $RandomTimer
 
 signal change_level(decision: LevelDecision)
@@ -19,26 +17,25 @@ enum LevelDecision{
 var level_data: LevelData
 
 func _ready():
-	# timer.timeout.connect(spawn_an_item)
 	left_decision.body_entered.connect(_on_player_enter_left)
 	left_decision.body_exited.connect(_on_player_exit_left)
 
 	right_decision.body_entered.connect(_on_player_enter_right)
 	right_decision.body_exited.connect(_on_player_exit_right)
-
 	
 	if level_data and wave_manager and level_data.level_type == LevelData.LevelType.COMBAT:
-		wave_manager.level_beaten.connect(spawn_an_item)
+		left_decision.visible = false
+		right_decision.visible = false
+		wave_manager.level_beaten.connect(room_beaten)
 		wave_manager.wave_start()
 	else:
 		print_debug("we are at the start or not combat room")
 
 ## Example of getting the static resource file from the base resource class in code.
 ## just a static function that returns a WeaponResource using load(path_to_resource)
-func spawn_an_item():
-	print_debug(level_data)
-	if level_data:
-		print_debug(level_data.reward_item)
+func room_beaten():
+	left_decision.visible = true
+	right_decision.visible = true
 
 	if level_data and level_data.reward_item:
 		var item: Item = item_scene.instantiate()
@@ -48,6 +45,9 @@ func spawn_an_item():
 		call_deferred("add_child", item)
 
 func _on_player_enter_left(body: Node2D):
+	if !left_decision.visible: 
+		return
+
 	if body is Player:
 		body.attempt_interact.connect(_left_decision)
 
@@ -60,6 +60,9 @@ func _left_decision():
 	change_level.emit(LevelDecision.LEFT) 
 
 func _on_player_enter_right(body: Node2D):
+	if !right_decision.visible:
+		return
+
 	if body is Player:
 		body.attempt_interact.connect(_right_decision)
 
