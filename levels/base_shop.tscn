@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://2bw7ecs58y25"]
+[gd_scene load_steps=13 format=3 uid="uid://2bw7ecs58y25"]
 
 [ext_resource type="Script" path="res://Spawner.gd" id="1_7ve51"]
 [ext_resource type="Script" path="res://world.gd" id="1_d5a0y"]
+[ext_resource type="Script" path="res://ShopManager.gd" id="2_7i8v3"]
 [ext_resource type="PackedScene" uid="uid://d4ncufhvpp51u" path="res://enemies/enemy.tscn" id="2_c63e5"]
+[ext_resource type="PackedScene" uid="uid://kxjc0d5ol2dw" path="res://shop.tscn" id="2_of5qt"]
 [ext_resource type="PackedScene" uid="uid://c4cms4p3rsxmy" path="res://player/player.tscn" id="3_kf7jd"]
 [ext_resource type="Script" path="res://resources/player_stats.gd" id="4_vpmhg"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="5_edm1r"]
@@ -25,6 +27,11 @@ radius = 33.0151
 [node name="base_shop" type="Node2D"]
 script = ExtResource("1_d5a0y")
 
+[node name="ShopManager" type="Node2D" parent="."]
+script = ExtResource("2_7i8v3")
+
+[node name="Shop" parent="ShopManager" instance=ExtResource("2_of5qt")]
+
 [node name="RandomTimer" type="Timer" parent="."]
 one_shot = true
 autostart = true
@@ -36,7 +43,7 @@ spawn_points = Array[Vector2]([Vector2(125, 125), Vector2(300, 300), Vector2(50,
 player = NodePath("../Player")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.882353, 0.870588, 0.854902, 1)
+modulate = Color(0.45098, 1, 0.682353, 1)
 position = Vector2(328.75, 189.75)
 scale = Vector2(658.5, 380.5)
 texture = SubResource("CanvasTexture_ffljc")
